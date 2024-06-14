@@ -13,8 +13,16 @@ $errorLog = @()
 $currentTimestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 
 try {
+    Write-Host "Starting the AD group comparison script..."
+
     # Read the group pairs from the Excel file
+    Write-Host "Reading group pairs from the Excel file..."
     $groupPairs = Import-Excel -Path $excelFilePath -WorksheetName 'Sheet1' | Where-Object { $_.'AD Group 1' -and $_.'AD Group 2' }
+
+    if ($groupPairs.Count -eq 0) {
+        Write-Host "No valid group pairs found in the Excel file. Exiting script."
+        exit
+    }
 
     # Initialize results
     $results = @()
@@ -23,6 +31,8 @@ try {
         $group1Name = $pair.'AD Group 1'
         $group2Name = $pair.'AD Group 2'
         
+        Write-Host "Comparing groups: $group1Name and $group2Name"
+
         try {
             # Get the members of the first group
             $group1 = Get-ADGroupMember -Identity $group1Name
@@ -59,7 +69,11 @@ try {
     }
 
     # Create the "Comparison Results" worksheet if it does not exist and write headers
-    if (-not (Get-ExcelSheetInfo -Path $excelFilePath | Where-Object { $_.Name -eq "Comparison Results" })) {
+    $sheetInfo = Get-ExcelSheetInfo -Path $excelFilePath
+    $worksheetExists = $sheetInfo | Where-Object { $_.Name -eq "Comparison Results" }
+
+    if (-not $worksheetExists) {
+        Write-Host "Creating 'Comparison Results' worksheet with headers..."
         $headers = [PSCustomObject]@{
             'AD Group 1' = 'AD Group 1'; 
             'AD Group 2' = 'AD Group 2'; 
@@ -71,14 +85,17 @@ try {
 
     # Read existing results from the Excel file, if any
     $existingResults = @()
-    if ((Get-ExcelSheetInfo -Path $excelFilePath | Where-Object { $_.Name -eq "Comparison Results" })) {
+    if ($worksheetExists) {
+        Write-Host "Reading existing results from 'Comparison Results' worksheet..."
         $existingResults = Import-Excel -Path $excelFilePath -WorksheetName "Comparison Results" -StartRow 2 -ErrorAction SilentlyContinue
     }
 
     # Combine existing results with new results
+    Write-Host "Combining existing results with new results..."
     $combinedResults = if ($existingResults) { $existingResults + $results } else { $results }
 
     # Export the combined results to the Excel file
+    Write-Host "Exporting the combined results to the 'Comparison Results' worksheet..."
     $combinedResults | Export-Excel -Path $excelFilePath -WorksheetName "Comparison Results" -StartRow 2 -StartColumn 1 -ClearSheet
 
 } catch {
@@ -95,3 +112,6 @@ if ($errorLog) {
 } else {
     Write-Host "Process completed successfully."
 }
+
+# Pause to allow the user to view the results
+Pause
