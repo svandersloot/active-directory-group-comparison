@@ -11,7 +11,7 @@ This PowerShell script compares users in specified Active Directory (AD) groups 
 - ImportExcel PowerShell Module
 
 ## Installation
-
+No longer necessary since the script handles the module installation
 1. **Install Active Directory Module** (if not already installed):
 
     ```powershell
