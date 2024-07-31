@@ -1,4 +1,16 @@
-﻿# Add the Active Directory PowerShell modules and ImportExcel module
+﻿# Check if Active Directory Module is installed
+if (-not (Get-Module -ListAvailable -Name ActiveDirectory)) {
+    Write-Host "Installing Active Directory Module..."
+    Install-WindowsFeature -Name RSAT-AD-PowerShell
+}
+
+# Check if ImportExcel Module is installed
+if (-not (Get-Module -ListAvailable -Name ImportExcel)) {
+    Write-Host "Installing ImportExcel Module..."
+    Install-Module -Name ImportExcel -Scope CurrentUser -Force
+}
+
+# Add the Active Directory PowerShell modules and ImportExcel module
 Import-Module ActiveDirectory
 Import-Module ImportExcel
 
