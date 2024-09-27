@@ -16,15 +16,15 @@ You don't need to manually install modules anymore since the script automaticall
 
 ### Install Active Directory Module (if not already installed):
 
-\```powershell
+```powershell
 Install-WindowsFeature -Name RSAT-AD-PowerShell
-\```
+'''
 
 ### Install ImportExcel Module:
 
-\```powershell
+```powershell
 Install-Module -Name ImportExcel -Scope CurrentUser
-\```
+'''
 
 ## Usage
 
