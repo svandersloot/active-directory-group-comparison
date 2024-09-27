@@ -18,11 +18,13 @@ You don't need to manually install modules anymore since the script automaticall
 
 \```powershell
 Install-WindowsFeature -Name RSAT-AD-PowerShell
+\```
 
 ### Install ImportExcel Module:
 
 \```powershell
 Install-Module -Name ImportExcel -Scope CurrentUser
+\```
 
 ## Usage
 
