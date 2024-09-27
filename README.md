@@ -19,7 +19,7 @@ Copy code
 Install-Module -Name ImportExcel -Scope CurrentUser
 Usage
 Prepare the Excel File:
-Ensure you have an Excel file named AD_Group_Comparison.xlsx (or as needed, e.g., AD_Group_Comparisonv2.xlsx) in the same directory as the script. The file should have two worksheets:
+Ensure you have an Excel file named AD_Group_Comparison.xlsx (or as needed, AD_Group_Comparisonv2.xlsx) in the same directory as the script. The file should have two worksheets:
 
 Group Comparison: For comparing users in AD groups, with the following headers:
 
