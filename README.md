@@ -1,4 +1,4 @@
-AD Group Comparison and User AD Group Listing Script
+#AD Group Comparison and User AD Group Listing Script
 Description
 This PowerShell script compares users in specified Active Directory (AD) groups and outputs the results to an Excel file. It identifies users that are common to two AD groups and logs the comparison results, including timestamps, into a designated worksheet within the same Excel file. Additionally, the script now retrieves and lists all AD groups that specified users are a part of and logs the information in alphabetical order into the User List tab of the Excel file. The script handles the creation of necessary worksheets and headers if they do not exist, and appends new results without overwriting existing data.
 
